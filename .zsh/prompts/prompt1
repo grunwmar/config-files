@@ -1,0 +1,16 @@
+#!/usr/bin/zsh
+
+setopt prompt_subst
+
+function get_git_branch() {
+    GIT=$(git branch --show-current 2>/dev/null)
+    if [[ -n $GIT ]]; then
+      echo -e "::$GIT"
+    fi
+}
+
+precmd () {
+  PROMPT='%~$(get_git_branch) '
+  RPROMPT='%D{%L:%M}'
+}
+

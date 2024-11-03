@@ -1,0 +1,23 @@
+#!/usr/bin/zsh
+
+setopt prompt_subst
+
+function get_git_branch() {
+    GIT=$(git branch --show-current 2>/dev/null)
+    if [[ -n $GIT ]]; then
+      echo -e "%F{10}:$GIT%f"
+    fi
+}
+
+function get_virtualenv() {
+    if [[ -n $VIRTUAL_ENV ]]; then
+      VENV=$(basename $VIRTUAL_ENV)
+      echo -e "%S%B%F{12}$VENV%f%b%s "
+    fi
+}
+
+function precmd() {
+  PRIVILEGED="%(!.%F{15}#%f.)"
+  PROMPT='%~$(get_git_branch)$PRIVILEGED '
+  RPROMPT='%(?..%F{1}[%?]%f  )$(get_virtualenv)%D{%L:%M}'
+}

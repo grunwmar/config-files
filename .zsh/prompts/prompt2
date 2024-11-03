@@ -1,0 +1,22 @@
+#!/usr/bin/zsh
+
+setopt prompt_subst
+
+function get_git_branch() {
+    GIT=$(git branch --show-current 2>/dev/null)
+    if [[ -n $GIT ]]; then
+      echo -e "%F{10}:$GIT%f"
+    fi
+}
+
+function get_virtualenv() {
+    if [[ -n $VIRTUAL_ENV ]]; then
+      VENV=$(basename $VIRTUAL_ENV)
+      echo -e "%F{14}*$VENV%f "
+    fi
+}
+
+function precmd() {
+  PROMPT='%~$(get_git_branch)%# '
+  RPROMPT='$(get_virtualenv)%D{%L:%M}'
+}
