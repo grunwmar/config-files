@@ -17,7 +17,7 @@ function pcoff() {
 }
 
 # Loading custom prompt
-function set_prompt () {
+function load_prompt () {
     . $ZDOTDIR/prompts/$1
 }
 
